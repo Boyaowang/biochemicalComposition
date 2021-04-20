@@ -6,7 +6,7 @@ global mC mH mO;
 %withAshMoist =[0.4546 0.0621 0.4833];
 %sum(withAshMoist)
 
-CHO = [49.72    6.08  44.20]; %C H O
+CHO = [50.38    6.19    43.43]; %C H O
 CH = [CHO(1)/(CHO(1)+CHO(2)) CHO(2)/(CHO(1)+CHO(2))]
 CHO = CHO./100;
 alpha = 0.68; beta = 0.95; gamma = 0.39;

@@ -3,10 +3,10 @@ clear;
 
 global mC mH mO;
 
-withAshMoist =[0.4546 0.0621 0.4833];
+withAshMoist =[0.4972    0.0608    0.4420];
 sum(withAshMoist)
 
-CHO = [0.534 0.06 0.406]; %C H O
+CHO = [0.534 0.060 0.406]; %C H O
 alpha = 0.6; beta = 0.8; gamma = 0.8; %delta = 0.8; epsilon = 1;
 mC = 12;
 mH = 1;
@@ -78,3 +78,17 @@ YLIGO = YLIGOmol*molarMass(LIGO)/totalMM
 YLIGC1 = YLIGC1mol*molarMass(LIGC)/totalMM
 YLIGC2 = YLIGC2mol*molarMass(LIGC)/totalMM
 YLIGC = YLIGC1 + YLIGC2
+
+%% save the first result for later processing
+Ymass1 = [YCELL YXYHW YLIGH YLIGO YLIGC]
+for i=1:5
+   if Ymass1(i)<1e-5
+       Ymass(i)=0;
+   end     
+end
+
+%% update the results based on new mass fractions
+for i=1:5
+Ymass2(i) = Ymass1(i)/sum(Ymass1);
+end
+Ymass2

@@ -3,12 +3,63 @@ clear;
 
 global mC mH mO;
 
-withAshMoist =[0.4546 0.0621 0.4833];
-sum(withAshMoist)
+%withAshMoist =[0.4546 0.0621 0.4833];
+%sum(withAshMoist)
 
-CHO = [0.513105051786092 0.0563305854998943 0.430564362714014]; %C H O
-alpha = 0.65; beta = 0.8; gamma = 0.8;
-delta = 1; epsilon = 0.82;
+CHO = [49.72    6.08  44.20]; %C H O
+CH = [CHO(1)/(CHO(1)+CHO(2)) CHO(2)/(CHO(1)+CHO(2))]
+CHO = CHO./100;
+alpha = 0.68; beta = 0.95; gamma = 0.39;
+delta = 0.8; epsilon = 0.73;
+
+
+%% involve OPT
+%% OPT1
+% alphaOpt1 = [-0.586 2.255 0];
+% betaOpt1 = [0.995 -0.012 0.162];
+% gammaOpt1 = [1.015 -0.045 -0.005];
+% deltaOpt1 = [0.294 0.986 0.002];
+% epsilonOpt1 = [0.734 -0.372 0.021];
+% 
+% alpha = alphaOpt1(1) + alphaOpt1(2) * CHO(1) + alphaOpt1(3) * CHO(2)
+% beta = betaOpt1(1) + betaOpt1(2) * CHO(1) + betaOpt1(3) * CHO(2)
+% gamma = gammaOpt1(1) + gammaOpt1(2) * CHO(1) + gammaOpt1(3) * CHO(2)
+% delta = deltaOpt1(1) + deltaOpt1(2) * CHO(1) + deltaOpt1(3) * CHO(2)
+% epsilon = epsilonOpt1(1) + epsilonOpt1(2) * CHO(1) + epsilonOpt1(3) * CHO(2)
+
+%% OPT2
+alphaOpt2 = [1.503 -0.037 -13.807];
+betaOpt2 = [2.079 -2.160 -0.207];
+gammaOpt2 = [12.697 -25.284 13.422];
+deltaOpt2 = [-1.75 3.428 13.422];
+epsilonOpt2 = [-2.339 1.303 41.335];
+
+alpha = alphaOpt2(1) + alphaOpt2(2) * CHO(1) + alphaOpt2(3) * CHO(2)
+beta = betaOpt2(1) + betaOpt2(2) * CHO(1) + betaOpt2(3) * CHO(2)
+gamma = gammaOpt2(1) + gammaOpt2(2) * CHO(1) + gammaOpt2(3) * CHO(2)
+delta = deltaOpt2(1) + deltaOpt2(2) * CHO(1) + deltaOpt2(3) * CHO(2)
+epsilon = epsilonOpt2(1) + epsilonOpt2(2) * CHO(1) + epsilonOpt2(3) * CHO(2)
+
+if alpha > 1
+    alpha = 1;
+end
+
+if beta > 1
+    beta = 1;
+end
+
+if gamma >1
+    gamma =1;
+end
+
+if delta >1
+    delta =1;
+end
+
+if epsilon >1
+    epsilon =1;
+end
+
 mC = 12;
 mH = 1;
 mO = 16;
@@ -54,7 +105,7 @@ beq=1.0;
 %lower boundary
 lb = [0, 0.0, 0.0];
 %upper boundary
-ub = [1, 0.5, 0.5];
+ub = [1, 1.0, 1.0];
 
 x = lsqlin(A,b,A,fracs,[],[],lb,ub)
 
@@ -84,3 +135,5 @@ YLIGC2 = YLIGC2mol*molarMass(LIGC)/totalMM;
 YLIGC = YLIGC1 + YLIGC2
 YTGL = YTGLmol*molarMass(TGL)/totalMM
 YTANN = YTANNmol*molarMass(TANN)/totalMM
+
+YCELL + YXYHW + YLIGH + YLIGO + YLIGC +YTGL + YTANN
